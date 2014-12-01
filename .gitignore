@@ -1,2 +1,2 @@
 #all files are published except coco2d folder
-cocos2d/*
+/cocos2d/*
