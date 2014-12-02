@@ -20,7 +20,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
-	glview->setDesignResolutionSize(320.0f, 480.0f, ResolutionPolicy::SHOW_ALL);
+	glview->setDesignResolutionSize(320.0f, 480.0f, ResolutionPolicy::EXACT_FIT);
 //	std::vector<std::string> searchPath;
 //	searchPath.push_back("height_864");
 //	CCFileUtils::getInstance()->setSearchPaths(searchPath);
