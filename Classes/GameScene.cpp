@@ -11,11 +11,11 @@ Scene* GameScene::createScene()
 {
 	//
 	auto gameScene = Scene::createWithPhysics();
-	gameScene->getPhysicsWorld()->setGravity(Vec2(0, -900)); //ÉèÖÃÖØÁ¦³¡,ÖØÁ¦¼ÓËÙ¶È¿ÉÒÔ¸ù¾ÝÊÖ¸Ð¸ÄÐ¡µã
+	gameScene->getPhysicsWorld()->setGravity(Vec2(0, -900)); //
 	
-	//Ìí¼ÓÖ÷ÓÎÏ·²ã
+	//
 	auto gameLayer = GameScene::create();
-//	gameLayer->setPhysicWorld(gameScene->getPhysicsWorld()); //°ó¶¨ÎïÀíÊÀ½ç
+//	gameLayer->setPhysicWorld(gameScene->getPhysicsWorld()); //
 	gameScene->addChild(gameLayer);
 	return gameScene;
 }
@@ -28,6 +28,8 @@ bool GameScene::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Point visibleOrigin = Director::getInstance()->getVisibleOrigin();
 
+	//æ¸¸æˆå‡†å¤‡å¼€å§‹
+	gameStatus = GAME_READY;
 	//back ground
 	Sprite *backGround = Sprite::createWithSpriteFrameName("bg.png");
 	backGround->setPosition(visibleOrigin.x + visibleSize.width /2, visibleOrigin.y + visibleSize.height /2);
@@ -37,6 +39,24 @@ bool GameScene::init()
 	auto gameLogo = Sprite::createWithSpriteFrameName("bird_logo.png");
 	gameLogo->setPosition(visibleOrigin.x + visibleSize.width /2, visibleOrigin.y + visibleSize.height /2+100);
 	this->addChild(gameLogo);
+	
+	//å°é¸Ÿ
+	birdSprite = Sprite::create();
+	birdSprite->setPosition(visibleOrigin.x + visibleSize.width / 3, visibleOrigin.y + visibleSize.height /2);
+	this->addChild(birdSprite);
+	
+	//ç¿…è†€
+	auto birdAnim= Animate::create(AnimationCache::getInstance()->animationByName("birdAnimation"));
+	birdSprite->runAction(RepeatForever::create(birdAnim));
+	auto up = MoveBy::create(0.4f, Point(0,8));
+	auto upBack = up->reverse();
+	//ä¸Šä¸‹æ™ƒåŠ¨
+	if (gameStatus == GAME_READY)
+	{
+		swingAction = RepeatForever::create(Sequence::create(up,upBack, NULL));
+		birdSprite->runAction(swingAction);
+	}
 	return true;
+	
 }
 
